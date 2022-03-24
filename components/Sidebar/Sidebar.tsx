@@ -10,7 +10,7 @@ const Sidebar: React.FC = () => {
   const spotifyApi = useSpotify();
   const {data: session, status} = useSession();
   const [playlists, setPlaylists] = useState<ListOfUsersPlaylistsResponse['items']>([]);
-  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState)
+  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
@@ -19,8 +19,6 @@ const Sidebar: React.FC = () => {
       })
     }
   }, [session, spotifyApi])
-
-  console.log('Picked playlist >>> ', playlistId)
 
   const onPickPlaylist = (id: string) => {
     setPlaylistId(id)
