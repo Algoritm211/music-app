@@ -63,7 +63,6 @@ export default NextAuth({
     },
 
     async session({ session, token }) {
-      console.log(session, token)
       // @ts-ignore
       session?.user?.accessToken = token.accessToken;
       session?.user?.refreshToken = token.refreshToken;

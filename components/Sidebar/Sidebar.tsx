@@ -1,14 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { HeartIcon, HomeIcon, LibraryIcon, LogoutIcon, RssIcon, SearchIcon } from '@heroicons/react/outline'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import { useSpotify } from '../../hooks/useSpotify'
+import ListOfUsersPlaylistsResponse = SpotifyApi.ListOfUsersPlaylistsResponse
 
 const Sidebar: React.FC = () => {
+  const spotifyApi = useSpotify();
+  const {data: session, status} = useSession();
+  const [playlists, setPlaylists] = useState<ListOfUsersPlaylistsResponse['items']>([]);
+
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getUserPlaylists().then((data) => {
+        setPlaylists(data.body.items);
+      })
+    }
+  }, [session, spotifyApi])
+
+  const playlistsBlock = playlists.map((playlist) => {
+    return (
+      <p key={playlist.id} className='cursor-pointer hover:text-white'>
+        {playlist.name}
+      </p>
+    )
+  })
+
   return (
-    <nav className='text-gray-500 p-5'>
+    <nav className='text-gray-500 p-5 overflow-y-scroll h-screen'>
       <div className='space-y-4'>
         <button
           className='flex items-center space-x-2 hover:text-white'
-          onClick={() => signOut()}
+          onClick={() => signOut({callbackUrl: '/'})}
         >
           <LogoutIcon className='h-5 w-5' />
           <p>Logout</p>
@@ -43,9 +65,7 @@ const Sidebar: React.FC = () => {
 
         <hr className='border-gray-900' />
         {/* Here will be playlists... */}
-        <p className='cursor-pointer hover:text-white'>
-          Some playlist...
-        </p>
+        {playlistsBlock}
       </div>
     </nav>
   )
