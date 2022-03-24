@@ -3,11 +3,14 @@ import { HeartIcon, HomeIcon, LibraryIcon, LogoutIcon, RssIcon, SearchIcon } fro
 import { signOut, useSession } from 'next-auth/react'
 import { useSpotify } from '../../hooks/useSpotify'
 import ListOfUsersPlaylistsResponse = SpotifyApi.ListOfUsersPlaylistsResponse
+import { useRecoilState } from 'recoil'
+import { playlistIdState } from '../../recoilAtoms/playlistAtom'
 
 const Sidebar: React.FC = () => {
   const spotifyApi = useSpotify();
   const {data: session, status} = useSession();
   const [playlists, setPlaylists] = useState<ListOfUsersPlaylistsResponse['items']>([]);
+  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState)
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
@@ -17,9 +20,18 @@ const Sidebar: React.FC = () => {
     }
   }, [session, spotifyApi])
 
+  console.log('Picked playlist >>> ', playlistId)
+
+  const onPickPlaylist = (id: string) => {
+    setPlaylistId(id)
+  }
+
   const playlistsBlock = playlists.map((playlist) => {
     return (
-      <p key={playlist.id} className='cursor-pointer hover:text-white'>
+      <p
+        key={playlist.id}
+        onClick={() => onPickPlaylist(playlist.id)}
+        className='cursor-pointer hover:text-white'>
         {playlist.name}
       </p>
     )

@@ -11,16 +11,19 @@ export const spotifyAPI = new SpotifyWebApi({
 export const useSpotify = () => {
   const {data: session} = useSession();
 
-  useEffect(() => {
+  const setupAPI = async () => {
     if (session) {
       if (session.error === 'RefreshAccessTokenError') {
-        void signIn()
+        await signIn()
       }
 
       // @ts-ignore
-      spotifyAPI.setAccessToken(session.user.accessToken)
+      await spotifyAPI.setAccessToken(session.user.accessToken)
     }
+  }
 
+  useEffect(() => {
+    setupAPI();
   }, [session])
 
   return spotifyAPI;

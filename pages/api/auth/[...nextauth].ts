@@ -10,7 +10,7 @@ const refreshAccessToken = async (token: any) => {
     spotifyAPI.setRefreshToken(token.refreshToken);
 
     // @ts-ignore
-    const { body: refreshedToken } = spotifyAPI.refreshAccessToken();
+    const { body: refreshedToken } = await spotifyAPI.refreshAccessToken();
 
     return {
       ...token,
@@ -20,13 +20,10 @@ const refreshAccessToken = async (token: any) => {
     }
 
   } catch (error) {
-    console.log(error)
-
     return {
       ...token,
       error: 'RefreshAccessTokenError',
     }
-
   }
 }
 

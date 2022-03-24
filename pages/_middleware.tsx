@@ -11,7 +11,6 @@ export async function middleware(req: NextRequest) {
 
   const {pathname} = req.nextUrl;
 
-  console.log(pathname)
 
   // Allow the requests if the following is true
   // 1. The token exists
