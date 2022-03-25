@@ -35,7 +35,7 @@ const Center: React.FC = () => {
   }, [spotifyAPI, playlistId])
 
   return (
-    <div className='bg-black flex-grow text-white'>
+    <div className='bg-black flex-grow text-white h-screen overflow-y-scroll'>
       <header className='absolute top-5 right-8'>
         <div className='flex items-center space-x-3
         bg-black cursor-pointer rounded-full p-1 pr-2 hover:opacity-80'>
