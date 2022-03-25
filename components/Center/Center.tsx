@@ -4,6 +4,7 @@ import { ChevronDownIcon } from '@heroicons/react/outline'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { playlistIdState, playlistState } from '../../recoilAtoms/playlistAtom'
 import { useSpotify } from '../../hooks/useSpotify'
+import { Songs } from '../Songs/Songs'
 
 const colors = [
   'from-indigo-700',
@@ -22,10 +23,8 @@ const Center: React.FC = () => {
   const playlistId = useRecoilValue(playlistIdState);
   const [playlist, setPlaylist] = useRecoilState(playlistState)
 
-  console.log(playlist)
-
   useEffect(() => {
-    setColor(colors[Math.round(Math.random() * colors.length)])
+    setColor(colors[Math.round(Math.random() * colors.length - 1)])
   }, [playlistId]);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const Center: React.FC = () => {
   }, [spotifyAPI, playlistId])
 
   return (
-    <div className='bg-white flex-grow text-white'>
+    <div className='bg-black flex-grow text-white'>
       <header className='absolute top-5 right-8'>
         <div className='flex items-center space-x-3
         bg-black cursor-pointer rounded-full p-1 pr-2 hover:opacity-80'>
@@ -51,7 +50,15 @@ const Center: React.FC = () => {
 
       <section className={`flex items-end space-x-7 h-80
         bg-gradient-to-b bg-black ${color}`}>
-        <h1>Some text</h1>
+        <img className='w-44 h-44 shadow-2xl' src={playlist?.images?.[0].url} alt='album_cover'/>
+        <div>
+          <p>Playlist</p>
+          <h1 className='font-bold md:text-3xl lg:text-4xl'>{playlist?.name}</h1>
+        </div>
+      </section>
+
+      <section>
+        <Songs />
       </section>
     </div>
   )

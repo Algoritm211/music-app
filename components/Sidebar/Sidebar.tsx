@@ -8,7 +8,7 @@ import { playlistIdState } from '../../recoilAtoms/playlistAtom'
 
 const Sidebar: React.FC = () => {
   const spotifyApi = useSpotify();
-  const {data: session, status} = useSession();
+  const {data: session} = useSession();
   const [playlists, setPlaylists] = useState<ListOfUsersPlaylistsResponse['items']>([]);
   const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
 
@@ -36,7 +36,8 @@ const Sidebar: React.FC = () => {
   })
 
   return (
-    <nav className='text-gray-500 p-5 overflow-y-scroll h-screen'>
+    <nav className='text-gray-500 text-xs lg:text-sm p-5 overflow-y-scroll
+    h-screen sm:max-w=[12rem] lg:max-w-[15rem] hidden md:block'>
       <div className='space-y-4'>
         <button
           className='flex items-center space-x-2 hover:text-white'
