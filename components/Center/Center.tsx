@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { playlistIdState, playlistState } from '../../recoilAtoms/playlistAtom'
@@ -38,7 +38,9 @@ const Center: React.FC = () => {
     <div className='bg-black flex-grow text-white h-screen overflow-y-scroll'>
       <header className='absolute top-5 right-8'>
         <div className='flex items-center space-x-3
-        bg-black cursor-pointer rounded-full p-1 pr-2 hover:opacity-80'>
+        bg-black cursor-pointer rounded-full p-1 pr-2 hover:opacity-80'
+        onClick={() => signOut()}
+        >
           <img
             className='rounded-full w-10 h-10 f-10 object-cover'
             src='https://www.ubackground.com/_ph/84/696598180.jpg'
