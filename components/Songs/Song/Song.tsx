@@ -18,9 +18,9 @@ const Song: React.FC<SongProps> = ({track, order}) => {
   const onPlaySong = () => {
     setCurrentTrackId(track.id);
     setIsPlaying(true);
-    void spotifyApi.play({
-      uris: [track.uri],
-    })
+    // void spotifyApi.play({
+    //   uris: [track.uri],
+    // })
   }
 
   return (

@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
           onClick={() => signOut({callbackUrl: '/'})}
         >
           <LogoutIcon className='h-5 w-5' />
-          <p>Logout</p>
+          <p>Log out</p>
         </button>
         <button className='flex items-center space-x-2 hover:text-white'>
           <HomeIcon className='h-5 w-5' />

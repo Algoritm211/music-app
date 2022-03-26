@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
-import { ChevronDownIcon } from '@heroicons/react/outline'
+import { ChevronDownIcon, UserIcon } from '@heroicons/react/outline'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { playlistIdState, playlistState } from '../../recoilAtoms/playlistAtom'
 import { useSpotify } from '../../hooks/useSpotify'
@@ -41,10 +41,15 @@ const Center: React.FC = () => {
         bg-black cursor-pointer rounded-full p-1 pr-2 hover:opacity-80'
         onClick={() => signOut()}
         >
-          <img
-            className='rounded-full w-10 h-10 f-10 object-cover'
-            src='https://www.ubackground.com/_ph/84/696598180.jpg'
-            alt='user_avatar' />
+          {session?.user?.image ? (
+            <img
+              className='rounded-full w-10 h-10 f-10 object-cover'
+              src={session?.user?.image!}
+              alt='user_avatar' />
+          ) : (
+            <UserIcon className='p-2' />
+          )}
+
           <h2>{session?.user?.name}</h2>
           <ChevronDownIcon className='h-5 w-5' />
         </div>
